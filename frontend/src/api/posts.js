@@ -1,12 +1,12 @@
-import axios from "axios";
-
-const BASE_URL = "http://localhost:8080";
+// src/api/posts.js
+import api from './axiosInstance'; // axios 인스턴스를 가져옴
 
 export const fetchPosts = async () => {
-    const response = await axios.get(`${BASE_URL}/api/posts`);
+    const response = await api.get('/posts');
     return response.data;
 };
 
 export const createPost = async (postData) => {
-    return await axios.post(`${BASE_URL}/api/posts`, postData);
+    const response = await api.post('/posts', postData);
+    return response.data;
 };

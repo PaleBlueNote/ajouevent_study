@@ -3,7 +3,7 @@ import React from 'react';
 
 function PostCard({ post }) {
     return (
-        <div className="bg-white rounded-2xl shadow-md p-5 hover:shadow-lg transition duration-300">
+        <div className="w-full bg-white rounded-2xl shadow-md p-5 hover:shadow-lg transition duration-300">
             <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-400 to-purple-400 flex items-center justify-center text-white font-bold text-sm">
                     {post.author?.[0]?.toUpperCase() || "?"}

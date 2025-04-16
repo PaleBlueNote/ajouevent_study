@@ -24,7 +24,7 @@ const PostForm = ({ onPostCreated }) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="bg-white p-6 rounded-2xl shadow-md mb-8 space-y-4"
+            className="bg-white p-6 rounded-2xl shadow-md mb-8 w-full space-y-4"
         >
             <input
                 type="text"
