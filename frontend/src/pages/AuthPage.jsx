@@ -1,8 +1,10 @@
 // src/pages/LoginPage.jsx
 import React from 'react';
 import LoginForm from '../components/auth/LoginForm';
+import SignUpForm from "../components/auth/SignUpForm.jsx";
+import AuthForm from "../components/auth/AuthForm.jsx";
 
-const LoginPage = () => {
+const AuthPage = () => {
     return (
         <div className="min-h-screen flex">
             {/* 왼쪽 소개 영역 */}
@@ -23,7 +25,7 @@ const LoginPage = () => {
             <div className="w-4/12 flex items-center justify-center bg-white">
                 {/* ← 여기 padding-right (pr-12)으로 오른쪽 공간 확보 */}
                 <div className="w-full max-w-md p-8">
-                    <LoginForm />
+                    <AuthForm />
                 </div>
             </div>
         </div>
@@ -31,4 +33,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default AuthPage;

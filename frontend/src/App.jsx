@@ -1,10 +1,10 @@
 // src/App.jsx
 import React from 'react';
 import BoardPage from './pages/BoardPage';
-import LoginPage from "./pages/LoginPage.jsx";
+import AuthPage from "./pages/AuthPage.jsx";
 
 function App() {
-    return <LoginPage />;
+    return <AuthPage />;
 }
 
 export default App;
