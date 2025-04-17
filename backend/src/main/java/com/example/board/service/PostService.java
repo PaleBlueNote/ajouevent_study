@@ -1,6 +1,6 @@
 package com.example.board.service;
 
-import com.example.board.model.Post;
+import com.example.board.domain.Post;
 import com.example.board.repository.PostRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.example.board.repository;
 
-import com.example.board.model.Post;
+import com.example.board.domain.Post;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

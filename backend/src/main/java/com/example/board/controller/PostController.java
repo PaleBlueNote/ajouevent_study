@@ -1,15 +1,15 @@
 package com.example.board.controller;
 
-import com.example.board.model.Post;
+import com.example.board.domain.Post;
 import com.example.board.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173") // or "*"
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 public class PostController {
     private final PostService postService;
 
