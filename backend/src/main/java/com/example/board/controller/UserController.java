@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
+
+import static java.util.Collections.emptyMap;
 
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
@@ -21,18 +24,9 @@ public class UserController {
      * POST /api/users
      */
     @PostMapping
-    public ResponseEntity<Void> signUp(@RequestBody SignUpRequest request,
-                                       HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> signUp(@RequestBody SignUpRequest request) {
         userService.signUp(request);
-
-        // 임시 쿠키 생성 (이름: userToken, 값: userLoginId)
-        Cookie cookie = new Cookie("userToken", request.getUserLoginId());
-        cookie.setHttpOnly(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60); // 1시간 유효
-        response.addCookie(cookie);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(emptyMap());
     }
 
     /**
@@ -40,8 +34,9 @@ public class UserController {
      * POST /api/users/validate?id=아이디
      */
     @PostMapping("/validate")
-    public void validateUsername(@RequestParam("id") String userLoginId) {
+    public ResponseEntity<Map<String, Object>> validateUsername(@RequestParam("id") String userLoginId) {
         userService.validateUsername(userLoginId);
+        return ResponseEntity.ok(emptyMap());
     }
 
     /**
@@ -49,11 +44,33 @@ public class UserController {
      * POST /api/users/login
      */
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request,
-                               @CookieValue(value = "userToken", required = false) String userToken) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request,
+                                               HttpServletResponse response) {
 
-        System.out.println("쿠키로 들어온 userToken: " + userToken);
-        return userService.login(request);
+        LoginResponse loginRes = userService.login(request); // 내부에서 userId 반환
+
+        Cookie cookie = new Cookie("userToken", String.valueOf(loginRes.getUserId()));
+        cookie.setPath("/");
+        cookie.setHttpOnly(false);
+        cookie.setMaxAge(3600); // 1시간
+        response.addCookie(cookie);
+
+        System.out.println("로그인 성공: userId 쿠키 발급 완료");
+
+        return ResponseEntity.ok(loginRes);
+    }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, Object>> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("userToken", null); // 삭제할 값
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(false);
+        response.addCookie(cookie);
+
+        System.out.println("로그아웃 쿠키 제거 완료");
+        return ResponseEntity.ok(emptyMap());
     }
 
     /**
@@ -70,9 +87,10 @@ public class UserController {
      * PUT /api/users/info
      */
     @PutMapping("/info")
-    public void updateMyInfo(@CookieValue(value = "userToken") Long userId,
+    public ResponseEntity<Map<String, Object>> updateMyInfo(@CookieValue(value = "userToken") Long userId,
                              @RequestBody UpdateUserRequest request) {
         userService.updateMyInfo(userId, request);
+        return ResponseEntity.ok(emptyMap());
     }
 
     /**
@@ -80,8 +98,9 @@ public class UserController {
      * DELETE /api/users
      */
     @DeleteMapping
-    public void deleteUser(@CookieValue(value = "userToken") Long userId) {
+    public ResponseEntity<Map<String, Object>> deleteUser(@CookieValue(value = "userToken") Long userId) {
         userService.deleteMyAccount(userId);
+        return ResponseEntity.ok(emptyMap());
     }
 
     /**

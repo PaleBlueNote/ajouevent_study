@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
         // 4) 암호화 & 저장
         String encPwd = passwordEncoder.encode(password);
+
         User user = User.builder()
                 .userLoginId(loginId)
                 .userPassword(encPwd)
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
         User u = userRepository.findByUserLoginId(req.getUserLoginId())
                 .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND));
         if (!passwordEncoder.matches(req.getUserPassword(), u.getUserPassword())) {
-            throw new UserException(ErrorCode.INVALID_PASSWORD);
+            throw new UserException(ErrorCode.PASSWORD_MISMATCH);
         }
         return LoginResponse.from(u);
     }
@@ -97,4 +98,10 @@ public class UserServiceImpl implements UserService {
     public UserInfoResponse getUserInfo(Long userId) {
         return getMyInfo(userId);  // 사실 같은 로직
     }
+
+    //테스트용
+    public UserRepository getUserRepository() {
+        return this.userRepository;
+    }
+
 }

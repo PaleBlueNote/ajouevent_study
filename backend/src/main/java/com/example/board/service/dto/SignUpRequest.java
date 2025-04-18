@@ -3,11 +3,13 @@ package com.example.board.service.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor // 테스트용
 public class SignUpRequest {
 
     // 아이디가 형식에 맞지 않을 경우 서비스에서 에러코드를 발생시키고 처리하기 위해
